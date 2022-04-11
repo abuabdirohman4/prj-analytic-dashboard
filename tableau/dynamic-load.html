@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Load</title>
+
+    <script
+      type="text/javascript"
+      src="https://public.tableau.com/javascripts/api/tableau-2.min.js"
+    ></script>
+  </head>
+
+  <body onload="createViz(0);">
+    <div id="vizContainer" style="width: 800px; height: 700px"></div>
+    <div id="controls" style="padding: 20px">
+      <button style="width: 100px" onclick="createViz(-1);">
+        Previous
+      </button>
+      <button style="width: 100px" onclick="createViz(1);">
+        Next
+      </button>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    let vizList = [
+      "http://public.tableau.com/views/RegionalSampleWorkbook/Flights",
+      "http://public.tableau.com/views/RegionalSampleWorkbook/Obesity",
+      "http://public.tableau.com/views/RegionalSampleWorkbook/College",
+      "http://public.tableau.com/views/RegionalSampleWorkbook/Stocks",
+      "http://public.tableau.com/views/RegionalSampleWorkbook/Storms",
+    ];
+
+    let viz,
+      vizLen = vizList.length,
+      vizCount = 0;
+
+    function createViz(vizPlusMinus) {
+      let vizDiv = document.getElementById("vizContainer"),
+        options = {
+          hideTabs: true,
+        };
+
+      vizCount = vizCount + vizPlusMinus;
+        // 0 = 0 + 1 // 1
+        // 0 = 0 + -1
+
+      if (vizCount >= vizLen) {
+        // Keep the vizCount in the bounds of the array index.
+        vizCount = 0;
+      } else if (vizCount < 0) {
+        //   -1 = 5 - 1 = 4
+        vizCount = vizLen - 1;
+      }
+
+      if (viz) {
+        // If a viz object exists, delete it.
+        viz.dispose();
+      }
+
+      let vizURL = vizList[vizCount];
+      viz = new tableau.Viz(vizDiv, vizURL, options);
+    }
+  </script>
+</html>
