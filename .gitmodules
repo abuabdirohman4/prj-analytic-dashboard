@@ -1,0 +1,4 @@
+[submodule "analytic-dashboard"]
+	path = analytic-dashboard
+	url = git@github.com:abuabdirohman4/analytic-dashboard.git
+	branch = master
